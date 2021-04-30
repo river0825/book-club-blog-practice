@@ -1,14 +1,24 @@
 import {PostApplication} from "../../src/application/PostApplication";
 
+const NOW_STR = '2021-03-21T06:00:00.000Z'
+jest
+    .spyOn(global.Date, 'now')
+    .mockImplementation(() =>
+        new Date(NOW_STR).valueOf()
+    );
+
+
 describe('Given an author', () => {
     let app: PostApplication;
     beforeEach(() => {
         app = new PostApplication()
     })
-    test('should get a post if publish a post with correct params', () => {
+    test('should get a post with correct creationDate/modificationDate if publish a post with correct params', () => {
         let post = app.publishPost("subject", "body")
         expect(post.subject).toBe("subject")
         expect(post.body).toBe("body")
+        expect(post.creationDate.toISOString()).toBe(NOW_STR);
+        expect(post.modificationDate.toISOString()).toBe(NOW_STR);
     })
 
     test('should fail if publish a post with empty subject', () => {
