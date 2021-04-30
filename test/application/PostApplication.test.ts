@@ -1,36 +1,38 @@
-import {PostApplication} from "../../src/application/PostApplication";
+import {PostApplication} from "../../src/application/PostApplication"
+import {InMemoryPostRepository} from "../infrastructure/repository/InMemoryPostRepository"
 
-const NOW_STR = '2021-03-21T06:00:00.000Z'
+const NOW_STR = "2021-03-21T06:00:00.000Z"
 jest
-    .spyOn(global.Date, 'now')
+    .spyOn(global.Date, "now")
     .mockImplementation(() =>
         new Date(NOW_STR).valueOf()
-    );
+    )
 
 
-describe('Given an author', () => {
-    let app: PostApplication;
+describe("Given an author, when he publish post", () => {
+    let app: PostApplication
     beforeEach(() => {
-        app = new PostApplication()
+        const postRepo = new InMemoryPostRepository()
+        app = new PostApplication(postRepo)
     })
-    test('should get a post with correct creationDate/modificationDate if publish a post with correct params', () => {
-        let post = app.publishPost("subject", "body")
+    test("should get a post with correct creationDate/modificationDate if publish a post with correct params", () => {
+        const post = app.publishPost("subject", "body")
         expect(post.subject).toBe("subject")
         expect(post.body).toBe("body")
-        expect(post.creationDate.toISOString()).toBe(NOW_STR);
-        expect(post.modificationDate.toISOString()).toBe(NOW_STR);
+        expect(post.creationDate.toISOString()).toBe(NOW_STR)
+        expect(post.modificationDate.toISOString()).toBe(NOW_STR)
     })
 
-    test('should fail if publish a post with empty subject', () => {
+    test("should fail if publish a post with empty subject", () => {
         expect(() => {
             app.publishPost("", "body")
-        }).toThrow('Post subject should not be empty');
+        }).toThrow("Post subject should not be empty")
     })
 
-    test('should fail if publish a post with empty body', () => {
+    test("should fail if publish a post with empty body", () => {
         expect(() => {
             app.publishPost("subject", "")
-        }).toThrow('Post body should not be empty');
+        }).toThrow("Post body should not be empty")
     })
 
 })

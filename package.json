@@ -27,5 +27,9 @@
   "bugs": {
     "url": "https://github.com/river0825/book-club-blog-practice/issues"
   },
-  "homepage": "https://github.com/river0825/book-club-blog-practice#readme"
+  "homepage": "https://github.com/river0825/book-club-blog-practice#readme",
+  "dependencies": {
+    "@types/uuid": "^8.3.0",
+    "uuid": "^8.3.2"
+  }
 }
