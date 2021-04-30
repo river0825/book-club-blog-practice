@@ -1,0 +1,25 @@
+{
+  "name": "book-club-blog-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "ts-jest": "^26.5.5",
+    "ts-lint": "^4.5.1",
+    "typescript": "^4.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/river0825/book-club-blog-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/river0825/book-club-blog-practice/issues"
+  },
+  "homepage": "https://github.com/river0825/book-club-blog-practice#readme"
+}
