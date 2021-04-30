@@ -17,4 +17,18 @@ describe("Given a reader, when he reply post", () => {
         const reply = app.replyPost("postId", "name", "replyBody")
         expect(reply.id).not.toBeNull()
     })
+    
+    it("should have creationDate and modificationDate, when he reply with correct value", () => {
+        const app = new ReplyApplication()
+        const NOW_STR = "2021-03-21T06:00:00.000Z"
+        jest
+            .spyOn(global.Date, "now")
+            .mockImplementation(() =>
+                new Date(NOW_STR).valueOf()
+            )
+        
+        const reply = app.replyPost("postId", "name", "replyBody")
+        expect(reply.creationDate.valueOf()).toBe(new Date(NOW_STR).valueOf())
+        expect(reply.modificationDate.valueOf()).toBe(new Date(NOW_STR).valueOf())
+    })
 })

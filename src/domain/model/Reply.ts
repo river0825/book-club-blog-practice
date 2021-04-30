@@ -5,11 +5,16 @@ export class Reply{
     private readonly _name: string;
     private readonly _replyBody: string;
     private readonly _id: string;
-    constructor(id: string, postId: string, name: string, replyBody: string) {
+    private readonly _modificationDate: Date;
+    private readonly _creationDate: Date;
+    
+    constructor(id: string, postId: string, name: string, replyBody: string, creationDate: Date, modificationDate: Date) {
         this._id = id
         this._postId = postId
         this._name = name
         this._replyBody = replyBody
+        this._creationDate = creationDate
+        this._modificationDate = modificationDate
     }
     
     public get postId(): string {
@@ -24,8 +29,17 @@ export class Reply{
     public get id(): string {
         return this._id
     }
+    public get modificationDate(): Date {
+        return this._modificationDate
+    }
+    public get creationDate(): Date {
+        return this._creationDate
+    }
+    
     public static reply(postId: string, name: string, replyBody: string): Reply {
         const uuid = v4()
-        return new Reply(uuid, postId, name, replyBody)
+        const creationDate = new Date(Date.now())
+        const modificationDate = new Date(Date.now())
+        return new Reply(uuid, postId, name, replyBody, creationDate, modificationDate)
     }
 }
