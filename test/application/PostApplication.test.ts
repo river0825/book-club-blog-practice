@@ -77,15 +77,16 @@ describe("Given a author, when he modify a post", () => {
     })
     
     it("should success if subject/body is not empty", () => {
+        const newSubject = "new subject"
+        const newBody = "new body"
         const postDTO = postApp.publishPost("subject", "body")
         
-        const newPostDTO = postApp.modifyPost(postDTO.id, "new subject", "new body")
-        expect(newPostDTO).toMatchObject({
-            id : postDTO.id,
-            subject : "new subject",
-            body : "new body",
-            creationDate: new Date(NOW_STR).valueOf(),
-            modificationDate: new Date(NOW_STR).valueOf()
-        })
+        postApp.modifyPost(postDTO.id, newSubject, newBody)
+        
+        const newPostDTO = postRepo.getById(postDTO.id)
+        expect(newPostDTO.id.toString()).toBe(postDTO.id)
+        expect(newPostDTO.body).toBe(newBody)
+        expect(newPostDTO.subject).toBe(newSubject)
+        expect(newPostDTO.modificationDate.valueOf()).toBe(new Date(NOW_STR).valueOf())
     })
 })

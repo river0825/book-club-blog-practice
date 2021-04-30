@@ -48,4 +48,10 @@ export class Post {
     public get id(): PostId{
         return this._id
     }
+    
+    public modify(subject: string, body: string): void {
+        this._subject = subject
+        this._body = body
+        this._modificationDate = new Date(Date.now())
+    }
 }

@@ -17,11 +17,14 @@ export class InMemoryPostRepository implements PostRepository {
         return uuidV4()
     }
     
+    getById(id: string): Post {
+        return this.map[id]
+    }
+    
     public delete(id: string): void {
         if(!this.map[id]){
             throw new Error(`Delete fail, post ${id} is not exists`)
         }
         delete this.map[id]
     }
-
 }
