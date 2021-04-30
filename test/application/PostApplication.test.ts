@@ -89,4 +89,56 @@ describe("Given a author, when he modify a post", () => {
         expect(newPostDTO.subject).toBe(newSubject)
         expect(newPostDTO.modificationDate.valueOf()).toBe(new Date(NOW_STR).valueOf())
     })
+    
+    it("modificationDate should be now if post updated", () => {
+        const newSubject = "new subject"
+        const newBody = "new body"
+        const postDTO = postApp.publishPost("subject", "body")
+        
+        const NOW_STR_2 = "2021-03-22T06:00:00.000Z"
+        jest
+            .spyOn(global.Date, "now")
+            .mockImplementation(() =>
+                new Date(NOW_STR_2).valueOf()
+            )
+        
+        postApp.modifyPost(postDTO.id, newSubject, newBody)
+        
+        const newPostDTO = postRepo.getById(postDTO.id)
+        expect(newPostDTO.modificationDate.valueOf()).toBe(new Date(NOW_STR_2).valueOf())
+    })
+    
+    it("should fail if new subject is empty", () => {
+        const newSubject = ""
+        const newBody = "new body"
+        const postDTO = postApp.publishPost("subject", "body")
+        
+        const NOW_STR_2 = "2021-03-22T06:00:00.000Z"
+        jest
+            .spyOn(global.Date, "now")
+            .mockImplementation(() =>
+                new Date(NOW_STR_2).valueOf()
+            )
+       
+        expect(() => {
+            postApp.modifyPost(postDTO.id, newSubject, newBody)
+        }).toThrow("Post subject should not be empty")
+    })
+    
+    it("should fail if new body is empty", () => {
+        const newSubject = "new subject"
+        const newBody = ""
+        const postDTO = postApp.publishPost("subject", "body")
+        
+        const NOW_STR_2 = "2021-03-22T06:00:00.000Z"
+        jest
+            .spyOn(global.Date, "now")
+            .mockImplementation(() =>
+                new Date(NOW_STR_2).valueOf()
+            )
+        
+        expect(() => {
+            postApp.modifyPost(postDTO.id, newSubject, newBody)
+        }).toThrow("Post body should not be empty")
+    })
 })

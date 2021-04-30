@@ -9,26 +9,24 @@ export class Post {
     private _modificationDate: Date;
 
     constructor(id: PostId, subject: string, body: string, creationDate: Date, modificationDate: Date) {
-        if (!subject || subject === "") {
-            throw new Error("Post subject should not be empty")
-        }
-        if (!body || body === "") {
-            throw new Error("Post body should not be empty")
-        }
         this._id = id
         this._subject = subject
         this._body = body
         this._creationDate = creationDate
         this._modificationDate = modificationDate
+        this.validate()
     }
-
-    static publish(id: string, subject: string, body: string): Post {
-        if (!subject || subject === "") {
+    
+    private validate(): void {
+        if (!this.subject || this.subject === "") {
             throw new Error("Post subject should not be empty")
         }
-        if (!body || body === "") {
+        if (!this.body || this.body === "") {
             throw new Error("Post body should not be empty")
         }
+    }
+    
+    static publish(id: string, subject: string, body: string): Post {
         return new Post(new PostId(id), subject, body, new Date(Date.now()), new Date(Date.now()))
     }
 
@@ -53,5 +51,6 @@ export class Post {
         this._subject = subject
         this._body = body
         this._modificationDate = new Date(Date.now())
+        this.validate()
     }
 }
