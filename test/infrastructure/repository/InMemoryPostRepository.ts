@@ -16,5 +16,12 @@ export class InMemoryPostRepository implements PostRepository {
     nextIdentity(): string {
         return uuidV4()
     }
+    
+    public delete(id: string): void {
+        if(!this.map[id]){
+            throw new Error(`Delete fail, post ${id} is not exists`)
+        }
+        delete this.map[id]
+    }
 
 }

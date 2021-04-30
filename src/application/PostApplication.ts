@@ -26,5 +26,8 @@ export class PostApplication {
             modificationDate: post.modificationDate.valueOf()
         }
     }
-
+    
+    public deletePost(postDTO: PostDTO): void {
+        this._postRepo.delete(postDTO.id)
+    }
 }

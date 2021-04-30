@@ -43,3 +43,24 @@ describe("Given an author, when he publish post", () => {
     })
 
 })
+
+describe("Given a user, when he delete a post", () => {
+    it("should success if the post exists", () => {
+        const repo = new InMemoryPostRepository()
+        const app = new PostApplication(repo)
+        const postDTO = app.publishPost("subject", "body")
+        expect(repo.count()).toBe(1)
+        
+        app.deletePost(postDTO)
+        expect(repo.count()).toBe(0)
+    })
+    
+    it("should throw exception if the post does not exists", () => {
+        const repo = new InMemoryPostRepository()
+        const app = new PostApplication(repo)
+        const id = "1"
+        
+        expect(() => {app.deletePost({body: "", creationDate: 0, id: id, modificationDate: 0, subject: "" })})
+            .toThrow(`Delete fail, post ${id} is not exists`)
+    })
+})
