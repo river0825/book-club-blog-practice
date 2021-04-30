@@ -68,4 +68,24 @@ describe("Given a user, when he delete a post", () => {
     })
 })
 
-// describe("Given a ")
+describe("Given a author, when he modify a post", () => {
+    let postRepo: InMemoryPostRepository
+    let postApp: PostApplication
+    beforeEach(() => {
+        postRepo = new InMemoryPostRepository()
+        postApp = new PostApplication(postRepo)
+    })
+    
+    it("should success if subject/body is not empty", () => {
+        const postDTO = postApp.publishPost("subject", "body")
+        
+        const newPostDTO = postApp.modifyPost(postDTO.id, "new subject", "new body")
+        expect(newPostDTO).toMatchObject({
+            id : postDTO.id,
+            subject : "new subject",
+            body : "new body",
+            creationDate: new Date(NOW_STR).valueOf(),
+            modificationDate: new Date(NOW_STR).valueOf()
+        })
+    })
+})

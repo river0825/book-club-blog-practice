@@ -30,4 +30,10 @@ export class PostApplication {
     public deletePost(postDTO: PostDTO): void {
         this._postRepo.delete(postDTO.id)
     }
+    
+    public modifyPost(id: string, subject: string, body: string): PostDTO{
+        return {
+            body: body, id: id, creationDate: Date.now().valueOf(), modificationDate: Date.now().valueOf(), subject: subject
+        }
+    }
 }
