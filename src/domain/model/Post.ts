@@ -2,10 +2,10 @@ import {PostId} from "./PostId"
 
 export class Post {
 
-    private _id: PostId;
+    private readonly _id: PostId;
     private _subject: string;
     private _body: string;
-    private _creationDate: Date;
+    private readonly _creationDate: Date;
     private _modificationDate: Date;
 
     constructor(id: PostId, subject: string, body: string, creationDate: Date, modificationDate: Date) {
@@ -26,8 +26,8 @@ export class Post {
         }
     }
     
-    static publish(id: string, subject: string, body: string): Post {
-        return new Post(new PostId(id), subject, body, new Date(Date.now()), new Date(Date.now()))
+    static publish(id: PostId, subject: string, body: string): Post {
+        return new Post(id, subject, body, new Date(Date.now()), new Date(Date.now()))
     }
 
     get creationDate(): Date {
