@@ -16,10 +16,10 @@ describe("Publish a post", () => {
         const post = Post.publish(id,subject, body)
 
         expect(post).toMatchObject({
-            _id: id,
             _subject: subject,
             _body: body,
         })
+        expect(post.id.toString()).toBe(id)
         expect(post.creationDate.toISOString()).toBe(NOW_STR)
         expect(post.modificationDate.toISOString()).toBe(NOW_STR)
     })

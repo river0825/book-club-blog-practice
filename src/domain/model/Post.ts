@@ -1,12 +1,14 @@
+import {PostId} from "./PostId"
+
 export class Post {
 
-    private _id: string;
+    private _id: PostId;
     private _subject: string;
     private _body: string;
     private _creationDate: Date;
     private _modificationDate: Date;
 
-    constructor(id: string, subject: string, body: string, creationDate: Date, modificationDate: Date) {
+    constructor(id: PostId, subject: string, body: string, creationDate: Date, modificationDate: Date) {
         if (!subject || subject === "") {
             throw new Error("Post subject should not be empty")
         }
@@ -27,7 +29,7 @@ export class Post {
         if (!body || body === "") {
             throw new Error("Post body should not be empty")
         }
-        return new Post(id, subject, body, new Date(Date.now()), new Date(Date.now()))
+        return new Post(new PostId(id), subject, body, new Date(Date.now()), new Date(Date.now()))
     }
 
     get creationDate(): Date {
@@ -43,8 +45,7 @@ export class Post {
     public get subject(): string {
         return this._subject
     }
-    
-    public getId(): string{
+    public get id(): PostId{
         return this._id
     }
 }

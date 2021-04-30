@@ -6,7 +6,7 @@ export class InMemoryPostRepository implements PostRepository {
     map: { [id: string]: Post} = {};
     
     save(post: Post): void {
-        this.map[post.getId()] = post
+        this.map[post.id.toString()] = post
     }
 
     count(): number {

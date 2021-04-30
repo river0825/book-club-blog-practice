@@ -26,8 +26,8 @@ describe("Given an author, when he publish post", () => {
         const post = app.publishPost("subject", "body")
         expect(post.subject).toBe("subject")
         expect(post.body).toBe("body")
-        expect(post.creationDate.toISOString()).toBe(NOW_STR)
-        expect(post.modificationDate.toISOString()).toBe(NOW_STR)
+        expect(post.creationDate).toBe(new Date(NOW_STR).valueOf())
+        expect(post.modificationDate).toBe(new Date(NOW_STR).valueOf())
     })
 
     test("should fail if publish a post with empty subject", () => {
