@@ -6,15 +6,15 @@ export class Post {
     private _body: string;
     private _creationDate: Date;
     private _modificationDate: Date;
-    private _tags: Array<string>;
-
+    private _tags: Array<Tag>;
+    
     constructor(id: PostId, subject: string, body: string, creationDate: Date, modificationDate: Date) {
         this._id = id
         this._subject = subject
         this._body = body
         this._creationDate = creationDate
         this._modificationDate = modificationDate
-        this._tags = new Array<string>()
+        this._tags = new Array<Tag>()
         this.validate()
     }
     
@@ -30,24 +30,28 @@ export class Post {
     static publish(id: string, subject: string, body: string): Post {
         return new Post(new PostId(id), subject, body, new Date(Date.now()), new Date(Date.now()))
     }
-
+    
     get creationDate(): Date {
         return this._creationDate
     }
-
+    
     get modificationDate(): Date {
         return this._modificationDate
     }
+    
     public get body(): string {
         return this._body
     }
+    
     public get subject(): string {
         return this._subject
     }
-    public get id(): PostId{
+    
+    public get id(): PostId {
         return this._id
     }
-    public get tags(): Array<string> {
+    
+    public get tags(): Array<Tag> {
         return this._tags
     }
     
@@ -59,7 +63,26 @@ export class Post {
     }
     
     public addTag(aTag: string): void {
-        if(!aTag || aTag === "") throw new Error("add tag should not empty")
-        this._tags.push(aTag)
+        this._tags.push(new Tag(aTag))
+    }
+}
+
+/**
+ * value object
+ */
+export class Tag {
+    private readonly _tag: string;
+    
+    constructor(aTag: string) {
+        if (!aTag || aTag === "") throw new Error("add tag should not empty")
+        this._tag = aTag
+    }
+    
+    toString(): string {
+        return this._tag
+    }
+    
+    public get tag(): string {
+        return this._tag
     }
 }

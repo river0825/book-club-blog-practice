@@ -157,7 +157,7 @@ describe("Given an author, when he add tag", () => {
     it("should success when the tag is not empty", () => {
         postApp.addTag(postDTO.id, "a tag")
         const post = postRepo.getById(postDTO.id)
-        expect(post.tags[0]).toBe("a tag")
+        expect(post.tags[0].toString()).toBe("a tag")
     })
     
     it("should fail when the tag is empty", () => {
