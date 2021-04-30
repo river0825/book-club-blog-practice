@@ -18,7 +18,7 @@ describe("Given an author, when he publish post", () => {
         app = new PostApplication(postRepo)
     })
     
-    test("should save to db if publish a post with correct params", () => {
+    test("should save to db if post published", () => {
         app.publishPost("subject", "body")
         expect(postRepo.count()).toBe(1)
     })
@@ -45,7 +45,7 @@ describe("Given an author, when he publish post", () => {
     
 })
 
-describe("Given a user, when he delete a post", () => {
+describe("Given an user, when he delete a post", () => {
     let postRepo: InMemoryPostRepository
     let postApp: PostApplication
     beforeEach(() => {
@@ -61,11 +61,11 @@ describe("Given a user, when he delete a post", () => {
     })
     
     it("should throw exception if the post does not exists", () => {
-        const id = "1"
+        const idStrNotExists = "f02c74f9-006b-4cc8-bfe7-56be3bd464dc"
         
         expect(() => {
-            postApp.deletePost(id)
-        }).toThrow(`Delete fail, post ${id} is not exists`)
+            postApp.deletePost(idStrNotExists)
+        }).toThrow(`Delete fail, post ${idStrNotExists} is not exists`)
     })
 })
 

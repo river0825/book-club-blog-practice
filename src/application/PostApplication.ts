@@ -1,17 +1,18 @@
 import {Post} from "../domain/model/Post"
+import {PostId} from "../domain/model/PostId"
 import {PostRepository} from "../domain/model/PostRepository"
 import {PostDTO} from "./dto/PostDTO"
 
 export class PostApplication {
     private _postRepo: PostRepository;
     
-    constructor(repository: PostRepository) {
-        this._postRepo = repository
+    constructor(postRepo: PostRepository) {
+        this._postRepo = postRepo
         
     }
     
     publishPost(subject: string, body: string): PostDTO {
-        const id: string = this._postRepo.nextIdentity()
+        const id  = this._postRepo.nextIdentity()
         const post = Post.publish(id, subject, body)
         this._postRepo.save(post)
         return this.transferToPostDTO(post)
@@ -27,7 +28,8 @@ export class PostApplication {
         }
     }
     
-    public deletePost(postId: string): void {
+    public deletePost(idStr: string): void {
+        const postId = new PostId(idStr)
         this._postRepo.delete(postId)
     }
     
