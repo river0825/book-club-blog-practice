@@ -1,5 +1,6 @@
 import {PostApplication} from "../../src/application/PostApplication"
 import {InMemoryPostRepository} from "../infrastructure/repository/InMemoryPostRepository"
+import {PostDTO} from "../../src/application/dto/PostDTO"
 
 const NOW_STR = "2021-03-21T06:00:00.000Z"
 jest
@@ -140,5 +141,28 @@ describe("Given a author, when he modify a post", () => {
         expect(() => {
             postApp.modifyPost(postDTO.id, newSubject, newBody)
         }).toThrow("Post body should not be empty")
+    })
+})
+
+describe("Given an author, when he add tag", () => {
+    let postRepo: InMemoryPostRepository
+    let postApp: PostApplication
+    let postDTO: PostDTO
+    beforeEach(() => {
+        postRepo = new InMemoryPostRepository()
+        postApp = new PostApplication(postRepo)
+        postDTO = postApp.publishPost("subject", "body")
+    })
+    
+    it("should success when the tag is not empty", () => {
+        postApp.addTag(postDTO.id, "a tag")
+        const post = postRepo.getById(postDTO.id)
+        expect(post.tags[0]).toBe("a tag")
+    })
+    
+    it("should fail when the tag is empty", () => {
+        expect(() => {
+            postApp.addTag(postDTO.id, "")
+        }).toThrow("add tag should not empty")
     })
 })

@@ -36,4 +36,10 @@ export class PostApplication {
         post.modify(subject, body)
         this._postRepo.save(post)
     }
+    
+    public addTag(id: string, aTag: string): void {
+        const post = this._postRepo.getById(id)
+        post.addTag(aTag)
+        this._postRepo.save(post)
+    }
 }

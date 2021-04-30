@@ -1,12 +1,12 @@
 import {PostId} from "./PostId"
 
 export class Post {
-
     private _id: PostId;
     private _subject: string;
     private _body: string;
     private _creationDate: Date;
     private _modificationDate: Date;
+    private _tags: Array<string>;
 
     constructor(id: PostId, subject: string, body: string, creationDate: Date, modificationDate: Date) {
         this._id = id
@@ -14,6 +14,7 @@ export class Post {
         this._body = body
         this._creationDate = creationDate
         this._modificationDate = modificationDate
+        this._tags = new Array<string>()
         this.validate()
     }
     
@@ -46,11 +47,19 @@ export class Post {
     public get id(): PostId{
         return this._id
     }
+    public get tags(): Array<string> {
+        return this._tags
+    }
     
     public modify(subject: string, body: string): void {
         this._subject = subject
         this._body = body
         this._modificationDate = new Date(Date.now())
         this.validate()
+    }
+    
+    public addTag(aTag: string): void {
+        if(!aTag || aTag === "") throw new Error("add tag should not empty")
+        this._tags.push(aTag)
     }
 }
