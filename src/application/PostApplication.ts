@@ -5,7 +5,6 @@ export class PostApplication {
     }
     
     publishPost(subject: string, body: string): Post {
-        let post = new Post(subject, body)
-        return post
+        return Post.publish(subject, body)
     }
 }
