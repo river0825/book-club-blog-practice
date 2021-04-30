@@ -27,8 +27,8 @@ export class PostApplication {
         }
     }
     
-    public deletePost(postDTO: PostDTO): void {
-        this._postRepo.delete(postDTO.id)
+    public deletePost(postId: string): void {
+        this._postRepo.delete(postId)
     }
     
     public modifyPost(id: string, subject: string, body: string): void {

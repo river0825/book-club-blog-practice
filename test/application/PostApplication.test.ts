@@ -55,7 +55,7 @@ describe("Given a user, when he delete a post", () => {
         const postDTO = postApp.publishPost("subject", "body")
         expect(postRepo.count()).toBe(1)
         
-        postApp.deletePost(postDTO)
+        postApp.deletePost(postDTO.id)
         expect(postRepo.count()).toBe(0)
     })
     
@@ -63,7 +63,7 @@ describe("Given a user, when he delete a post", () => {
         const id = "1"
         
         expect(() => {
-            postApp.deletePost({body: "", creationDate: 0, id: id, modificationDate: 0, subject: ""})
+            postApp.deletePost(id)
         }).toThrow(`Delete fail, post ${id} is not exists`)
     })
 })
