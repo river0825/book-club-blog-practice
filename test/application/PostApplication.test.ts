@@ -11,10 +11,17 @@ jest
 
 describe("Given an author, when he publish post", () => {
     let app: PostApplication
+    let postRepo: InMemoryPostRepository
     beforeEach(() => {
-        const postRepo = new InMemoryPostRepository()
+        postRepo = new InMemoryPostRepository()
         app = new PostApplication(postRepo)
     })
+
+    test("should save to db if publish a post with correct params", () => {
+        app.publishPost("subject", "body")
+        expect(postRepo.count()).toBe(1)
+    })
+
     test("should get a post with correct creationDate/modificationDate if publish a post with correct params", () => {
         const post = app.publishPost("subject", "body")
         expect(post.subject).toBe("subject")

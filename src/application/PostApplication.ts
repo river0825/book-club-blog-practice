@@ -1,17 +1,19 @@
 import {Post} from "../domain/model/Post"
-import {v4 as uuidv4} from "uuid"
 import {PostRepository} from "../domain/model/PostRepository"
 
 export class PostApplication {
-    private _repository: PostRepository
+    private _postRepo: PostRepository;
+
     constructor(repository: PostRepository) {
-        this._repository = repository
-    
+        this._postRepo = repository
+
     }
-    
+
     publishPost(subject: string, body: string): Post {
-        const id: string = uuidv4()
-        return Post.publish(id, subject, body)
+        const id: string = this._postRepo.nextIdentity()
+        const post = Post.publish(id, subject, body)
+        this._postRepo.save(post)
+        return post
     }
-    
+
 }
