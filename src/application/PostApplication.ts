@@ -2,6 +2,7 @@ import {Post} from "../domain/model/Post"
 import {PostId} from "../domain/model/PostId"
 import {PostRepository} from "../domain/model/PostRepository"
 import {PostDTO} from "./dto/PostDTO"
+import {PublishPostCommand} from "./command/PublishPostCommand"
 
 export class PostApplication {
     private _postRepo: PostRepository;
@@ -10,10 +11,10 @@ export class PostApplication {
         this._postRepo = postRepo
         
     }
-    
-    publishPost(subject: string, body: string): PostDTO {
+
+    publishPost(command: PublishPostCommand): PostDTO {
         const id  = this._postRepo.nextIdentity()
-        const post = Post.publish(id, subject, body)
+        const post = Post.publish(id, command.subject, command.body)
         this._postRepo.save(post)
         return this.transferToPostDTO(post)
     }
