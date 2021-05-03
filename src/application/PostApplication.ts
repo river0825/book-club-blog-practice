@@ -41,7 +41,10 @@ export class PostApplication {
         const post = this._postRepo.getById(new PostId(id))
 
         post.setTags(PostTagSet.generateByStringArray(tags))
+
         this._postRepo.save(post)
+        // TODO:
+        // this._tagRepo.saveIfNotExist(post.tags)
     }
 
     private transferToPostDTO(post: Post): PostDTO {
