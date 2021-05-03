@@ -4,6 +4,7 @@ import {PostDTO} from "../../src/application/dto/PostDTO"
 import {PublishPostCommand} from "../../src/application/command/PublishPostCommand"
 import {ModifyPostCommand} from "../../src/application/command/ModifyPostCommand"
 import {DeletePostCommand} from "../../src/application/command/DeletePostCommand"
+import {PostId} from "../../src/domain/model/PostId"
 
 const NOW_STR = "2021-03-21T06:00:00.000Z"
 jest
@@ -101,7 +102,7 @@ describe("Given a author, when he modify a post", () => {
         
         postApp.modifyPost(makeModifyPostCmd(postDTO.id, newSubject, newBody))
         
-        const newPostDTO = postRepo.getById(postDTO.id)
+        const newPostDTO = postRepo.getById(new PostId(postDTO.id))
         expect(newPostDTO.id.toString()).toBe(postDTO.id)
         expect(newPostDTO.body).toBe(newBody)
         expect(newPostDTO.subject).toBe(newSubject)
@@ -122,7 +123,7 @@ describe("Given a author, when he modify a post", () => {
         
         postApp.modifyPost(makeModifyPostCmd(postDTO.id, newSubject, newBody))
         
-        const newPostDTO = postRepo.getById(postDTO.id)
+        const newPostDTO = postRepo.getById(new PostId(postDTO.id))
         expect(newPostDTO.modificationDate.valueOf()).toBe(new Date(NOW_STR_2).valueOf())
     })
     
@@ -173,7 +174,7 @@ describe("Given an author, when he add tag", () => {
     
     it("should success when the tag is not empty", () => {
         postApp.addTag(postDTO.id, "a tag")
-        const post = postRepo.getById(postDTO.id)
+        const post = postRepo.getById(new PostId(postDTO.id))
         expect(post.tags[0].toString()).toBe("a tag")
     })
     

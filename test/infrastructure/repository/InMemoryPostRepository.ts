@@ -18,8 +18,8 @@ export class InMemoryPostRepository implements PostRepository {
         return new PostId(uuidV4())
     }
     
-    getById(id: string): Post {
-        return this.map[id]
+    getById(id: PostId): Post {
+        return this.map[id.toString()]
     }
     
     public delete(id: PostId): void {

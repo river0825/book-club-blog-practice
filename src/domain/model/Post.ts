@@ -1,4 +1,5 @@
 import {PostId} from "./PostId"
+import {Reply} from "./Reply"
 
 export class Post {
 
@@ -65,6 +66,11 @@ export class Post {
     
     public addTag(aTag: string): void {
         this._tags.push(new Tag(aTag))
+    }
+
+    reply(replierName: string, replyBody: string): Reply {
+        return Reply.generate(this.id, replierName, replyBody)
+
     }
 }
 
