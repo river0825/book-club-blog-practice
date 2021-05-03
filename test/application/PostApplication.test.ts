@@ -2,6 +2,7 @@ import {PostApplication} from "../../src/application/PostApplication"
 import {InMemoryPostRepository} from "../infrastructure/repository/InMemoryPostRepository"
 import {PostDTO} from "../../src/application/dto/PostDTO"
 import {PublishPostCommand} from "../../src/application/command/PublishPostCommand"
+import {ModifyPostCommand} from "../../src/application/command/ModifyPostCommand"
 
 const NOW_STR = "2021-03-21T06:00:00.000Z"
 jest
@@ -11,6 +12,11 @@ jest
     )
 
 const makePublishPostCmd = (subject: string, body: string): PublishPostCommand => ({
+    subject,
+    body
+})
+const makeModifyPostCmd = (id: string, subject: string, body: string): ModifyPostCommand => ({
+    id,
     subject,
     body
 })
@@ -89,7 +95,7 @@ describe("Given a author, when he modify a post", () => {
         const newBody = "new body"
         const postDTO = postApp.publishPost(makePublishPostCmd("subject", "body"))
         
-        postApp.modifyPost(postDTO.id, newSubject, newBody)
+        postApp.modifyPost(makeModifyPostCmd(postDTO.id, newSubject, newBody))
         
         const newPostDTO = postRepo.getById(postDTO.id)
         expect(newPostDTO.id.toString()).toBe(postDTO.id)
@@ -110,7 +116,7 @@ describe("Given a author, when he modify a post", () => {
                 new Date(NOW_STR_2).valueOf()
             )
         
-        postApp.modifyPost(postDTO.id, newSubject, newBody)
+        postApp.modifyPost(makeModifyPostCmd(postDTO.id, newSubject, newBody))
         
         const newPostDTO = postRepo.getById(postDTO.id)
         expect(newPostDTO.modificationDate.valueOf()).toBe(new Date(NOW_STR_2).valueOf())
@@ -129,7 +135,7 @@ describe("Given a author, when he modify a post", () => {
             )
        
         expect(() => {
-            postApp.modifyPost(postDTO.id, newSubject, newBody)
+            postApp.modifyPost(makeModifyPostCmd(postDTO.id, newSubject, newBody))
         }).toThrow("Post subject should not be empty")
     })
     
@@ -146,7 +152,7 @@ describe("Given a author, when he modify a post", () => {
             )
         
         expect(() => {
-            postApp.modifyPost(postDTO.id, newSubject, newBody)
+            postApp.modifyPost(makeModifyPostCmd(postDTO.id, newSubject, newBody))
         }).toThrow("Post body should not be empty")
     })
 })
