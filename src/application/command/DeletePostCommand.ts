@@ -1,3 +1,3 @@
 export interface DeletePostCommand {
-    postId: string
+    readonly postId: string
 }

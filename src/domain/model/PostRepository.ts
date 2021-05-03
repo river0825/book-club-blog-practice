@@ -5,6 +5,5 @@ export interface PostRepository{
     save(post: Post):void
     nextIdentity(): PostId
     delete(id: PostId): void;
-    
-    getById(id: string): Post;
+    getById(id: PostId): Post;
 }

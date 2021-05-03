@@ -11,7 +11,6 @@ export class PostApplication {
     
     constructor(postRepo: PostRepository) {
         this._postRepo = postRepo
-        
     }
 
     publishPost(command: PublishPostCommand): PostDTO {
@@ -28,13 +27,13 @@ export class PostApplication {
     }
     
     public modifyPost(command: ModifyPostCommand): void {
-        const post = this._postRepo.getById(command.id)
+        const post = this._postRepo.getById(new PostId(command.id))
         post.modify(command.subject, command.body)
         this._postRepo.save(post)
     }
     
     public addTag(id: string, aTag: string): void {
-        const post = this._postRepo.getById(id)
+        const post = this._postRepo.getById(new PostId(id))
         post.addTag(aTag)
         this._postRepo.save(post)
     }
