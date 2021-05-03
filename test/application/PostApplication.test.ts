@@ -173,14 +173,20 @@ describe("Given an author, when he add tag", () => {
     })
     
     it("should success when the tag is not empty", () => {
-        postApp.addTag(postDTO.id, "a tag")
+        postApp.setTags(postDTO.id, ["a tag"])
         const post = postRepo.getById(new PostId(postDTO.id))
         expect(post.tags[0].toString()).toBe("a tag")
     })
-    
+
+    it("should success and merge duplicate tags when there are duplicate tags", () => {
+        postApp.setTags(postDTO.id, ["a tag", "a tag"])
+        const post = postRepo.getById(new PostId(postDTO.id))
+        expect(post.tags.length).toBe(1)
+    })
+
     it("should fail when the tag is empty", () => {
         expect(() => {
-            postApp.addTag(postDTO.id, "")
+            postApp.setTags(postDTO.id, [""])
         }).toThrow("add tag should not empty")
     })
 })

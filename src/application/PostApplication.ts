@@ -1,10 +1,11 @@
-import {Post} from "../domain/model/Post"
+import {Post, PostTagSet, Tag} from "../domain/model/Post"
 import {PostId} from "../domain/model/PostId"
 import {PostRepository} from "../domain/model/PostRepository"
 import {PostDTO} from "./dto/PostDTO"
 import {PublishPostCommand} from "./command/PublishPostCommand"
 import {ModifyPostCommand} from "./command/ModifyPostCommand"
 import {DeletePostCommand} from "./command/DeletePostCommand"
+import {Error} from "ts-lint/lib/error"
 
 export class PostApplication {
     private _postRepo: PostRepository;
@@ -31,10 +32,15 @@ export class PostApplication {
         post.modify(command.subject, command.body)
         this._postRepo.save(post)
     }
-    
-    public addTag(id: string, aTag: string): void {
+
+    public setTags(id: string, tags: string[]): void {
+        if (tags === undefined) {
+            new Error("tags should not be empty")
+        }
+        
         const post = this._postRepo.getById(new PostId(id))
-        post.addTag(aTag)
+
+        post.setTags(PostTagSet.generateByStringArray(tags))
         this._postRepo.save(post)
     }
 
