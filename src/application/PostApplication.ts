@@ -4,6 +4,7 @@ import {PostRepository} from "../domain/model/PostRepository"
 import {PostDTO} from "./dto/PostDTO"
 import {PublishPostCommand} from "./command/PublishPostCommand"
 import {ModifyPostCommand} from "./command/ModifyPostCommand"
+import {DeletePostCommand} from "./command/DeletePostCommand"
 
 export class PostApplication {
     private _postRepo: PostRepository;
@@ -21,8 +22,8 @@ export class PostApplication {
     }
     
 
-    public deletePost(idStr: string): void {
-        const postId = new PostId(idStr)
+    public deletePost(command: DeletePostCommand): void {
+        const postId = new PostId(command.postId)
         this._postRepo.delete(postId)
     }
     

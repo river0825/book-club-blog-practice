@@ -3,6 +3,7 @@ import {InMemoryPostRepository} from "../infrastructure/repository/InMemoryPostR
 import {PostDTO} from "../../src/application/dto/PostDTO"
 import {PublishPostCommand} from "../../src/application/command/PublishPostCommand"
 import {ModifyPostCommand} from "../../src/application/command/ModifyPostCommand"
+import {DeletePostCommand} from "../../src/application/command/DeletePostCommand"
 
 const NOW_STR = "2021-03-21T06:00:00.000Z"
 jest
@@ -19,6 +20,9 @@ const makeModifyPostCmd = (id: string, subject: string, body: string): ModifyPos
     id,
     subject,
     body
+})
+const makeDeletePostCmd = (postId: string): DeletePostCommand => ({
+    postId,
 })
 
 describe("Given an author, when he publish post", () => {
@@ -69,7 +73,7 @@ describe("Given an user, when he delete a post", () => {
         const postDTO = postApp.publishPost(makePublishPostCmd("subject", "body"))
         expect(postRepo.count()).toBe(1)
         
-        postApp.deletePost(postDTO.id)
+        postApp.deletePost(makeDeletePostCmd(postDTO.id))
         expect(postRepo.count()).toBe(0)
     })
     
@@ -77,7 +81,7 @@ describe("Given an user, when he delete a post", () => {
         const idStrNotExists = "f02c74f9-006b-4cc8-bfe7-56be3bd464dc"
         
         expect(() => {
-            postApp.deletePost(idStrNotExists)
+            postApp.deletePost(makeDeletePostCmd(idStrNotExists))
         }).toThrow(`Delete fail, post ${idStrNotExists} is not exists`)
     })
 })
